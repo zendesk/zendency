@@ -1,0 +1,23 @@
+{
+  "version": "0.1.0",
+  "name": "zen",
+  "authors": [{
+    "name" : "Baldvin Smarason",
+    "email" : "bsmarason@zendesk.com"
+  }],
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zendesk/zenpm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zendesk/zenpm/issues"
+  },
+  "bin": "./main.js",
+  "devDependencies": {
+    "shelljs": "0.7.3",
+    "commander": "2.9.0",
+    "cli-color": "1.1.0"
+  }
+}
