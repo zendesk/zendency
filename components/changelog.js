@@ -45,6 +45,7 @@ const terminal = {
     cli.list('Push message', false)
     cli.line()
     cli.log('Completed')
+    cli.line()
   },
 
   log: (n) => terminal[n].call()
