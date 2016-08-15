@@ -1,11 +1,13 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "zenpm",
   "description": "Handy executables to install into the PATH",
-  "authors": [{
-    "name" : "Baldvin Smarason",
-    "email" : "bsmarason@zendesk.com"
-  }],
+  "authors": [
+    {
+      "name": "Baldvin Smarason",
+      "email": "bsmarason@zendesk.com"
+    }
+  ],
   "private": true,
   "license": "MIT",
   "repository": {
