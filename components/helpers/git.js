@@ -10,7 +10,7 @@ const command = {
   tag: (hash) =>
     `git describe --abbrev=0 --tags ${hash}`,
 
-  log: (newerTag, olderTag, format = '%h %s',) =>
+  log: (newerTag, olderTag, format = '%h %s') =>
     `git log ${olderTag}..${newerTag} --pretty=format:"${format}"`,
 
   update: (tag, message) =>
@@ -23,7 +23,7 @@ const command = {
     `git config user.name`,
 
   email: () =>
-    `git config user.email`å
+    `git config user.email`
 
 }
 
