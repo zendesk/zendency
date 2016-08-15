@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/zendesk/zenpm/issues"
   },
+  "scripts": {
+    "consume": "npm link && npm link zenpm"
+  },
   "bin": "./main.js",
   "devDependencies": {
     "shelljs": "0.7.3",
