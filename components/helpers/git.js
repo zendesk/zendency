@@ -14,7 +14,7 @@ const command = {
     `git log ${olderTag}..${newerTag} --pretty=format:"${format}"`,
 
   update: (tag, message) =>
-    `git tag ${tag} ${tag} -f -a -m "${message}"`,
+    `git tag ${tag} ${tag} -f -m "${message}"`,
 
   publish: () =>
     `git push --tags`,
@@ -91,7 +91,9 @@ const user = (silent = true) => {
 const message = (tag, changelog, silent = true) => {
 
   const usr = user(silent)
-  shell.exec(`git tag ${tag} ${tag} -f -m "Changelog\n\n${changelog}\n\n${usr}"`, { silent })
+  const cmd = command.update(tag, `Changelog\n\n${changelog}\n\n${usr}`)
+
+  shell.exec(cmd, { silent })
 
 }
 
