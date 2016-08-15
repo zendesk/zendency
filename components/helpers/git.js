@@ -62,7 +62,8 @@ const changelog = (newerTag, olderTag, format = '%h %s', silent = true) => {
   const cmd = command.log(newerTag, olderTag)
   const val = shell.exec(cmd, { silent }).stdout
 
-  return val
+  // Escape double quotes
+  return val.replace(/"/g, '\\"');
 
 }
 
@@ -87,12 +88,10 @@ const user = (silent = true) => {
 }
 
 // Message
-const message = (tag, changelog, silent = true) => {
+const message = (tag, changelog, silent = false) => {
 
   const usr = user(silent)
-  const val = shell.exec(`git tag ${tag} ${tag} -f -a -m "Changelog\n\n${changelog}\n\n${usr}"`, { silent })
-
-  return val;
+  shell.exec(`git tag ${tag} ${tag} -f -m "Changelog\n\n${changelog}\n\n${usr}"`, { silent })
 
 }
 
