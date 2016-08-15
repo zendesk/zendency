@@ -48,7 +48,7 @@ function* tag(index = 0, silent = true) {
 
   while(true) {
     const gen = hash(index++)
-    const cmd = command.tag(get.next().value)
+    const cmd = command.tag(gen.next().value)
     const val = shell.exec(cmd, { silent }).stdout
 
     yield sanitize(val)
