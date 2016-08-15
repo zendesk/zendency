@@ -21,7 +21,7 @@
     "consume": "npm link && npm link zenpm",
     "postversion": "zenpm --changelog"
   },
-  "bin": "./main.js",
+  "bin": "./bin/main.js",
   "devDependencies": {
     "shelljs": "0.7.3",
     "commander": "2.9.0",
