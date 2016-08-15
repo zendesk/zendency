@@ -79,7 +79,7 @@ const publish = (silent = true) => {
 // Username
 const user = (silent = true) => {
 
-  const username = shell.exec(command.name(), { silent })
+  const username = shell.exec(command.user(), { silent })
   const email    = shell.exec(command.email(), { silent })
 
   return sanitize(`${username} <${email}>`)
