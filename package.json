@@ -1,6 +1,7 @@
 {
   "version": "0.1.0",
   "name": "zen",
+  "description": "Handy executables to install into the PATH",
   "authors": [{
     "name" : "Baldvin Smarason",
     "email" : "bsmarason@zendesk.com"
