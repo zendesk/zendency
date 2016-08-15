@@ -88,7 +88,7 @@ const user = (silent = true) => {
 }
 
 // Message
-const message = (tag, changelog, silent = false) => {
+const message = (tag, changelog, silent = true) => {
 
   const usr = user(silent)
   shell.exec(`git tag ${tag} ${tag} -f -m "Changelog\n\n${changelog}\n\n${usr}"`, { silent })
