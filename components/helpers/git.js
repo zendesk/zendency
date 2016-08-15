@@ -17,7 +17,7 @@ const command = {
     `git tag ${tag} ${tag} -f -a -m "${message}"`,
 
   publish: () =>
-    `git push --tags --force`,
+    `git push --tags`,
 
   user: () =>
     `git config user.name`,
