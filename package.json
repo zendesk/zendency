@@ -16,7 +16,8 @@
     "url": "https://github.com/zendesk/zenpm/issues"
   },
   "scripts": {
-    "consume": "npm link && npm link zenpm"
+    "consume": "npm link && npm link zenpm",
+    "postversion": "zenpm --changelog"
   },
   "bin": "./main.js",
   "devDependencies": {
