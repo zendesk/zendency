@@ -22,7 +22,7 @@
     "postversion": "zenpm --changelog"
   },
   "bin": "./bin/main.js",
-  "devDependencies": {
+  "dependencies": {
     "shelljs": "0.7.3",
     "commander": "2.9.0",
     "cli-color": "1.1.0"
