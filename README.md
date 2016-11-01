@@ -1,4 +1,4 @@
-# zenpm
+# zendency
 Handy executables to install into the PATH
 
 ---
@@ -6,9 +6,9 @@ Handy executables to install into the PATH
 ###### Options
 
 ```shell
-zenpm --version
-zenpm --help
-zenpm --changelog
+zendency --version
+zendency --help
+zendency --changelog
 ```
 
 ---
@@ -20,11 +20,11 @@ zenpm --changelog
 ...
 
 "devDependencies": {
-    "zenpm": "zendesk/zenpm#v0.3.0"
+    "zendency": "zendesk/zendency#v0.3.0"
 },
 
 "scripts": {
-    "postversion": "zenpm --changelog"
+    "postversion": "zendency --changelog"
 }
 
 ...
@@ -39,4 +39,4 @@ Then you can update your package version as before by doing `npm version minor`
 
 ###### Example
 
-https://github.com/zendesk/zenpm/releases
+https://github.com/zendesk/zendency/releases
