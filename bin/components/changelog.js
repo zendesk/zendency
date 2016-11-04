@@ -6,45 +6,46 @@ const git = require('./helpers/git.js')
 const terminal = {
 
   0: () => {
+    cli.clear();
     cli.line()
-    cli.list('Find tags', true)
-    cli.list('Generate changelog', false)
-    cli.list('Add message', false)
-    cli.list('Push message', false)
+    cli.list('Find tags',          { type:'on' })
+    cli.list('Generate changelog', { type:'off' })
+    cli.list('Add message',        { type:'off' })
+    cli.list('Push message',       { type:'off' })
   },
 
   1: () => {
     cli.move(-4)
-    cli.list('Find tags', false)
-    cli.list('Generate changelog', true)
-    cli.list('Add message', false)
-    cli.list('Push message', false)
+    cli.list('Find tags',          { type:'done' })
+    cli.list('Generate changelog', { type:'on' })
+    cli.list('Add message',        { type:'off' })
+    cli.list('Push message',       { type:'off' })
   },
 
   2: () => {
     cli.move(-4)
-    cli.list('Find tags', false)
-    cli.list('Generate changelog', false)
-    cli.list('Add message', true)
-    cli.list('Push message', false)
+    cli.list('Find tags',          { type:'done' })
+    cli.list('Generate changelog', { type:'done' })
+    cli.list('Add message',        { type:'on' })
+    cli.list('Push message',       { type:'off' })
   },
 
   3: () => {
     cli.move(-4)
-    cli.list('Find tags', false)
-    cli.list('Generate changelog', false)
-    cli.list('Add message', false)
-    cli.list('Push message', true)
+    cli.list('Find tags',          { type:'done' })
+    cli.list('Generate changelog', { type:'done' })
+    cli.list('Add message',        { type:'done' })
+    cli.list('Push message',       { type:'on' })
   },
 
   4: () => {
     cli.move(-4)
-    cli.list('Find tags', false)
-    cli.list('Generate changelog', false)
-    cli.list('Add message', false)
-    cli.list('Push message', false)
+    cli.list('Find tags',          { type:'done' })
+    cli.list('Generate changelog', { type:'done' })
+    cli.list('Add message',        { type:'done' })
+    cli.list('Push message',       { type:'done' })
     cli.line()
-    cli.log('Completed')
+    cli.success('Completed')
     cli.line()
   },
 
