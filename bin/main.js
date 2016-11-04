@@ -14,9 +14,6 @@ const production  = require('./components/production.js')
 const pathRoot     = path.dirname(module.paths[2], '../')
 const pathPackage  = path.join(pathRoot, 'package.json')
 
-// Get parent package
-const parent = require(pathPackage)
-
 // CLI interface
 program
   .version(package.version)
@@ -32,6 +29,9 @@ if (program.changelog) {
 
 if (program.development) {
 
+  // Get parent package
+  const parent = require(pathPackage)
+
   // Settings
   const port   = parent.config && parent.config.port || 3333
   const input  = parent.main
@@ -42,6 +42,9 @@ if (program.development) {
 }
 
 if (program.build) {
+
+  // Get parent package
+  const parent = require(pathPackage)
 
   // Settings
   const input  = parent.main
