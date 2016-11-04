@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "zendency",
   "description": "Handy executables to install into the PATH",
   "authors": [
@@ -32,7 +32,6 @@
     "babel-loader": "6.x.x",
     "babel-preset-es2015": "6.x.x",
     "babel-preset-react": "6.x.x",
-    "react-hot-loader": "1.x.x",
     "css-loader": "0.x.x",
     "style-loader": "0.x.x"
   }
