@@ -7,8 +7,8 @@ const pathHelper     = require('./helpers/path-helper')
 const webpackOptions = require('./helpers/webpack-options')
 
 // Variables
-const DEV_SERVER   = 'webpack-dev-server/client?http://localhost:';
-const SYNTAX_ERROR = 'webpack/hot/only-dev-server';
+const DEV_SERVER   = 'webpack-dev-server/client?http://localhost:'
+const SYNTAX_ERROR = 'webpack/hot/only-dev-server'
 
 // Module definition
 const development = (port, { input, output }, parent) => {
