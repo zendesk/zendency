@@ -38,10 +38,6 @@ const development = ({ entry, filepath, filename, includes }) => ({
     },
 
     externals: {
-      handlebars: 'Handlebars',
-      jquery: 'jQuery',
-      lodash: '_',
-      moment: 'moment',
       ZAFClient: 'ZAFClient'
     }
 
@@ -80,10 +76,6 @@ const production = ({ entry, filepath, filename, includes }) => ({
     },
 
     externals: {
-      handlebars: 'Handlebars',
-      jquery: 'jQuery',
-      lodash: '_',
-      moment: 'moment',
       ZAFClient: 'ZAFClient'
     },
 
