@@ -2,12 +2,13 @@
 const WebpackServer  = require('webpack-dev-server')
 const webpack        = require('webpack')
 const path           = require('path')
+const fs             = require('fs')
 const cli            = require('.//helpers/cli.js')
 const pathHelper     = require('./helpers/path-helper')
 const webpackOptions = require('./helpers/webpack-options')
 
 // Module definition
-const production = ({ input, output }, parent) => {
+const production = ({ input, output, assets }, parent) => {
 
   // Add to terminal
   cli.clear()
@@ -16,8 +17,6 @@ const production = ({ input, output }, parent) => {
   cli.list('Compile',    { type:'off' })
 
   // Loop through and copy assets
-  const assets = parent.assets || []
-
   assets.forEach(file => {
     fs.createReadStream(file).pipe(fs.createWriteStream('./app/assets/' + path.basename(file)))
   });

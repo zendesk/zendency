@@ -2,10 +2,8 @@
 
 // Dependencies
 const path        = require('path');
-const fs          = require('fs');
 const program     = require('commander')
 const package     = require('./../package.json')
-const cli         = require('./components/helpers/cli.js')
 const changelog   = require('./components/changelog.js')
 const development = require('./components/development.js')
 const production  = require('./components/production.js')
@@ -49,7 +47,8 @@ if (program.build) {
   // Settings
   const input  = parent.main
   const output = './app/assets/' + path.basename(input)
+  const assets = parent.assets || []
 
-  production({ input, output }, pathRoot)
+  production({ input, output, assets }, pathRoot)
 
 }
