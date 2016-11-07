@@ -10,8 +10,6 @@ const development = ({ entry, filepath, filename, includes }) => ({
       path: filepath,
       filename: filename
     },
-    
-    watch: true, 
 
     plugins: [
       new webpack.HotModuleReplacementPlugin
@@ -58,8 +56,6 @@ const production = ({ entry, filepath, filename, includes }) => ({
       filename: filename,
       libraryTarget: 'umd'
     },
-    
-    watch: true,
 
     module: {
 
