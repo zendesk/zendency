@@ -1,43 +1,93 @@
 // Dependencies
-const WebpackServer  = require('webpack-dev-server')
-const webpack        = require('webpack')
-const path           = require('path')
-const cli            = require('.//helpers/cli.js')
-const pathHelper     = require('./helpers/path-helper')
-const webpackOptions = require('./helpers/webpack-options')
+const Server  = require('webpack-dev-server')
+const Webpack = require('./helpers/webpack')
+const Package = require('./helpers/package')
+const zaf     = require('./helpers/zaf')
+const cli     = require('./helpers/cli')
+const fs      = require('./helpers/fs')
 
-// Variables
-const DEV_SERVER   = 'webpack-dev-server/client?http://localhost:'
-const SYNTAX_ERROR = 'webpack/hot/only-dev-server'
+// Get callee packages
+const package  = new Package('package.json')
+const manifest = new Package('manifest.json')
+
+// Create a webpack proxy object
+const createProxy = (assets, port, proxy = {}) => {
+
+  assets.forEach(file => {
+
+    const filename = fs.split(file).filename
+    const path     = `/${filename}`
+
+    proxy[path] = {
+      target: `http://localhost:${port}/${file}`,
+      pathRewrite: { [path]: '' }
+    }
+
+  })
+
+  return proxy
+
+}
 
 // Module definition
-const development = (port, { input, output }, parent) => {
+module.exports = () => {
 
-  // split path into filepath and filename
-  const { filepath, filename } = pathHelper.splitPath(output)
+  // Settings
+  const data = package.data
+  const port = data.config && data.config.port || 4567
+  const main = data.main
 
-  // Create entries
-  const entries = pathHelper.createArray([input], i => {
-    return path.join(parent, i)
+  // Create dev server
+  const dev_server = 'webpack-dev-server/client?http://localhost:' + port
+  const hot_loader = 'webpack/hot/only-dev-server'
+
+  // Add path to list
+  const include = fs.map(main, file => {
+    return fs.absolute(package.path, fs.split(file).filepath)
   })
 
-  // Create entry point
-  const entry = [DEV_SERVER + port, SYNTAX_ERROR].concat(entries)
+  //
+  const assets = {
+    entry: fs.absolute(package.path, fs.split(main).filepath),
+    files: fs.absolute(package.path, data.files),
 
-  // Create includes for loaders
-  const includes = pathHelper.createArray([input], i => {
+    get value() {
+      return fs.relative(assets.entry, assets.files)
+    }
+  }
 
-    const { filepath } = pathHelper.splitPath(i)
-    return path.join(parent, filepath)
+  // Create entry points
+  const entries = fs.absolute(package.path, data.files)
+  const entry   = [dev_server, hot_loader, ...entries]
 
-  })
+  // Server options
+  const options = {
+    quiet: true,
+    hot: true,
+    contentBase: include,
 
-  // Setup webpack
-  const settings = webpackOptions.development({ entry, filepath: parent, filename, includes })
-  const compiler = webpack(settings)
+    proxy: createProxy(assets.value, port),
 
-  // Listener
-  const onConnect = (error) => {
+    setup: (express) => {
+
+      // Create app.js from manifest.json
+      const data = zaf.create(manifest.data, port)
+
+      // Export app.js
+      express.get('/app.js', (request, response) => {
+        response.setHeader('content-type', 'application/javascript');
+        response.send(data)
+      })
+
+    }
+  }
+
+  // Create development server
+  const compiler = new Webpack({ entry, path: package.path, include })
+  const server   = new Server(compiler, options)
+
+  // Listen to server
+  server.listen(port, 'localhost', error => {
 
     // Return error
     if (error)
@@ -51,22 +101,9 @@ const development = (port, { input, output }, parent) => {
     cli.log('Listening at http://localhost:' + port)
     cli.line()
 
-  }
+  })
 
-  // Create server
-  const webpackServer = new WebpackServer(compiler, {
-
-    quiet: true,
-    contentBase: path.join(parent, filepath),
-    hot: true,
-    stats: { colors: true }
-
-  }).listen(port, 'localhost', onConnect)
-
-  // Return server
-  return webpackServer
+  // Return
+  return server
 
 }
-
-// Exporter
-module.exports = development

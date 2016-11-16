@@ -66,4 +66,4 @@ const clear = () => process.stdout.write(screen)
 const line = () => process.stdout.write(`\n`)
 
 // Exporter
-module.exports = { clear, move, log, success, list, line }
+module.exports = { move, log, success, list, clear, line }
