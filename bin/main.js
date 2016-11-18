@@ -5,6 +5,7 @@ const program     = require('commander')
 const package     = require('./../package.json')
 const changelog   = require('./components/changelog.js')
 const development = require('./components/development.js')
+const compile     = require('./components/compile.js')
 
 // CLI interface
 program
@@ -22,4 +23,4 @@ if (program.development)
   development()
 
 if (program.compile)
-  console.log('compile...')
+  compile()

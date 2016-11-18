@@ -33,9 +33,10 @@ const createProxy = (assets, port, proxy = {}) => {
 module.exports = () => {
 
   // Settings
-  const data = package.data
-  const port = data.config && data.config.port || 4567
-  const main = data.main
+  const data  = package.data
+  const port  = data.config && data.config.port || 4567
+  const main  = data.main
+  const files = fs.onlyFiles(data.files)
 
   // Create dev server
   const dev_server = 'webpack-dev-server/client?http://localhost:' + port
@@ -49,7 +50,7 @@ module.exports = () => {
   //
   const assets = {
     entry: fs.absolute(package.path, fs.split(main).filepath),
-    files: fs.absolute(package.path, data.files),
+    files: fs.absolute(package.path, files),
 
     get value() {
       return fs.relative(assets.entry, assets.files)
@@ -57,7 +58,7 @@ module.exports = () => {
   }
 
   // Create entry points
-  const entries = fs.absolute(package.path, data.files)
+  const entries = fs.absolute(package.path, files)
   const entry   = [dev_server, hot_loader, ...entries]
 
   // Server options

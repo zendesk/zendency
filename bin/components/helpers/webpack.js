@@ -31,6 +31,10 @@ const options = ({ entry, path, include }) => ({
       loader: 'handlebars-loader'
     },{
       include,
+      test: /\.(jpe?g|png|gif|svg)$/,
+      loader: 'file-loader'
+    },{
+      include,
       test: /\.jsx?$/,
       loader: 'react-hot'
     },{
