@@ -8,7 +8,7 @@ class Package {
   constructor(filename) {
 
     // Get parent path
-    const dir = path.dirname(module.paths[3], '../')
+    const dir = path.dirname(module.paths[4], '../')
     const pkg = fs.absolute(dir, filename)
 
     try {
