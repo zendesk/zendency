@@ -8,7 +8,7 @@ class Package {
   constructor(filename) {
 
     // Get parent path
-    const dir = '/Users/baldvinmarsmarason/Code/zendesk/emoji-app/' // path.dirname(module.paths[3], '../')
+    const dir = path.dirname(module.paths[3], '../')
     const pkg = fs.absolute(dir, filename)
 
     return {

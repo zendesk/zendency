@@ -1,8 +1,9 @@
 // Global dependencies
 const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 //
-const options = ({ entry, path, include }) => ({
+const options = ({ entry, path, include, copy }) => ({
 
   entry,
 
@@ -12,7 +13,8 @@ const options = ({ entry, path, include }) => ({
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin(copy)
   ],
 
   module: {
@@ -29,6 +31,13 @@ const options = ({ entry, path, include }) => ({
       include,
       test: /\.hbs$/,
       loader: 'handlebars-loader'
+    },{
+      include,
+      test: /\.(jpe?g|png|gif|svg)$/,
+      loader: 'file-loader',
+      query: {
+        name: '[name].[ext]'
+      }
     },{
       include,
       test: /\.jsx?$/,
