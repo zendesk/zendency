@@ -18,7 +18,7 @@ class Package {
         data: require(pkg)
       }
 
-    } catch {
+    } catch(e) {
       return 'could not find module'
     }
 
