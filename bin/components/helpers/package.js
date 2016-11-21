@@ -11,9 +11,15 @@ class Package {
     const dir = path.dirname(module.paths[3], '../')
     const pkg = fs.absolute(dir, filename)
 
-    return {
-      path: dir,
-      data: require(pkg)
+    try {
+
+      return {
+        path: dir,
+        data: require(pkg)
+      }
+
+    } catch {
+      return 'could not find module'
     }
 
   }
