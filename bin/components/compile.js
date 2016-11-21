@@ -1,5 +1,5 @@
 // Dependencies
-const webpack = require('webpack')
+const Webpack = require('./helpers/webpack')
 const Package = require('./helpers/package')
 const zaf     = require('./helpers/zaf')
 const cli     = require('./helpers/cli')
@@ -15,81 +15,44 @@ module.exports = () => {
   // Settings
   const data  = package.data
   const main  = data.main
+  const files = fs.onlyFiles(data.assets)
 
+  // Add path to list
   const include = fs.map(main, file => {
     return fs.absolute(package.path, fs.split(file).filepath)
   })
 
-  console.log(main);
+  // Create entry point
+  const entry = fs.absolute(package.path, files)
+
+  // Add copy path
+  const copy = [{
+    from: fs.absolute(package.path, 'manifest.json'),
+    to:   fs.absolute(package.path, '/app/manifest.json')
+  }, {
+    from: fs.absolute(package.path, data.main),
+    to:   fs.absolute(package.path, 'app/assets/index.html')
+  }, {
+    from: fs.absolute(data.translation, '**/*'),
+    to:   fs.absolute(package.path, 'app/translation/[name].[ext]')
+  }]
 
   // Run webpack
-  const compile = webpack({
-    entry: main,
+  const compiler = new Webpack({ entry, path: package.path + '/app/assets/', include, copy })
 
-    output: {
-      path: package.path,
-      filename: 'baldvin_bundle.js',
-      libraryTarget: 'umd'
-    },
-
-    module: {
-
-      loaders: [{
-        include,
-        test: /\.html?$/,
-        loader: 'handlebars-loader'
-      },{
-        include,
-        test: /\.handlebars$/,
-        loader: 'handlebars-loader'
-      },{
-        include,
-        test: /\.hbs$/,
-        loader: 'handlebars-loader'
-      },{
-        include,
-        test: /\.(jpe?g|png|gif|svg)$/,
-        loader: 'file-loader'
-      },{
-        include,
-        test: /\.jsx?$/,
-        loader: 'react-hot'
-      },{
-        include,
-        test: /\.jsx?$/,
-        loader: 'babel'
-      },{
-        include,
-        test: /\.css$/,
-        loader: 'style-loader',
-        query: {}
-      },{
-        include,
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[local]-[hash:base64:5]'
-        }
-      }]
-
-    },
-
-    resolve: {
-      extensions: ['', '.js', '.jsx']
-    }
-  })
-
-  compile.run((error, stats) => {
+  // Run compiler
+  compiler.run((error, stats) => {
 
     // Return error
     if (error)
-      return console.error(error);
+      return console.error(error)
 
     // Show success
-    console.log('Build compiled');
+    cli.clear()
+    cli.line()
+    cli.success('Compiled')
+    cli.line()
 
-  });
+  })
 
 }

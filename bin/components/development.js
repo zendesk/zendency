@@ -36,7 +36,7 @@ module.exports = () => {
   const data  = package.data
   const port  = data.config && data.config.port || 4567
   const main  = data.main
-  const files = fs.onlyFiles(data.files)
+  const files = fs.onlyFiles(data.assets)
 
   // Create dev server
   const dev_server = 'webpack-dev-server/client?http://localhost:' + port
@@ -76,7 +76,7 @@ module.exports = () => {
 
       // Export app.js
       express.get('/app.js', (request, response) => {
-        response.setHeader('content-type', 'application/javascript');
+        response.setHeader('content-type', 'application/javascript')
         response.send(data)
       })
 
