@@ -41,6 +41,9 @@
     "shelljs": "0.7.x",
     "style-loader": "0.x.x",
     "webpack": "1.x.x",
-    "webpack-dev-server": "1.x.x"
+    "webpack-dev-server": "1.x.x",
+    "del": "2.x.x",
+    "fstream": "1.0.x",
+    "tar": "2.x.x"
   }
 }

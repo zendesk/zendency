@@ -1,4 +1,8 @@
 // Dependencies
+const fstream = require('fstream')
+const tar     = require('tar')
+const del     = require('del');
+
 const Webpack = require('./helpers/webpack')
 const Package = require('./helpers/package')
 const zaf     = require('./helpers/zaf')
@@ -28,7 +32,7 @@ module.exports = () => {
   // Add copy path
   const copy = [{
     from: fs.absolute(package.path, 'manifest.json'),
-    to:   fs.absolute(package.path, '/app/manifest.json')
+    to:   fs.absolute(package.path, 'app/manifest.json')
   }, {
     from: fs.absolute(package.path, data.main),
     to:   fs.absolute(package.path, 'app/assets/index.html')
@@ -40,6 +44,12 @@ module.exports = () => {
   // Run webpack
   const compiler = new Webpack({ entry, path: package.path + '/app/assets/', include, copy })
 
+  // Show step
+  cli.clear()
+  cli.line()
+  cli.log('Compiling...')
+  cli.line()
+
   // Run compiler
   compiler.run((error, stats) => {
 
@@ -47,11 +57,33 @@ module.exports = () => {
     if (error)
       return console.error(error)
 
-    // Show success
-    cli.clear()
-    cli.line()
-    cli.success('Compiled')
-    cli.line()
+    // Zip folder
+    const stream = fstream
+      .Reader(fs.absolute(package.path, 'app'))
+      .pipe(tar.Pack())
+      .pipe(fstream.Writer('app.tar'))
+
+
+    stream.on('close', function() {
+
+      // Show step
+      cli.clear()
+      cli.line()
+      cli.log('Create TAR file...')
+      cli.line()
+
+      // Remove temp file
+      del([fs.absolute(package.path, 'app')]).then(paths => {
+
+        // Show success
+        cli.clear()
+        cli.line()
+        cli.success('Completed')
+        cli.line()
+
+      })
+
+    });
 
   })
 
