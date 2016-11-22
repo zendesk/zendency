@@ -38,7 +38,7 @@ module.exports = () => {
     to:   fs.absolute(package.path, 'app/assets/index.html')
   }, {
     from: fs.absolute(data.translation, '**/*'),
-    to:   fs.absolute(package.path, 'app/translation/[name].[ext]')
+    to:   fs.absolute(package.path, 'app/translations/[name].[ext]')
   }]
 
   // Run webpack
