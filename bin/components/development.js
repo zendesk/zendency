@@ -71,6 +71,9 @@ module.exports = () => {
 
     setup: (express) => {
 
+      if (!manifest || !manifest.data)
+        return;
+
       // Create app.js from manifest.json
       const data = zaf.create(manifest.data, port)
 

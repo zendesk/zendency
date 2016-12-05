@@ -60,6 +60,10 @@ const options = ({ entry, path, include, copy }) => ({
         importLoaders: 1,
         localIdentName: '[local]-[hash:base64:5]'
       }
+    },{
+      include,
+      test: /\.json$/,
+      loader: 'json-loader'
     }]
 
   },
