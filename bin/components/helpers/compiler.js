@@ -1,58 +1,45 @@
 // Global dependencies
-const webpack = require('webpack')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const Webpack    = require('webpack')
+const CopyPlugin = require('copy-webpack-plugin')
 
-//
-const options = ({ entry, path, include, copy }) => ({
+// Webpack options
+const Options = ({ entry, copy, plugins }) => ({
 
   entry,
+  plugins,
 
   output: {
-    path,
-    filename: '[name].js'
+    filename: '[name]'
   },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new CopyWebpackPlugin(copy)
-  ],
 
   module: {
 
     loaders: [{
-      include,
       test: /\.html?$/,
       loader: 'handlebars-loader'
     },{
-      include,
       test: /\.handlebars$/,
       loader: 'handlebars-loader'
     },{
-      include,
       test: /\.hbs$/,
       loader: 'handlebars-loader'
     },{
-      include,
       test: /\.(jpe?g|png|gif|svg)$/,
       loader: 'file-loader',
       query: {
         name: '[name].[ext]'
       }
     },{
-      include,
       test: /\.jsx?$/,
       loader: 'react-hot'
     },{
-      include,
       test: /\.jsx?$/,
       loader: 'babel'
     },{
-      include,
       test: /\.css$/,
       loader: 'style-loader',
       query: {}
     },{
-      include,
       test: /\.css$/,
       loader: 'css-loader',
       query: {
@@ -61,7 +48,6 @@ const options = ({ entry, path, include, copy }) => ({
         localIdentName: '[local]-[hash:base64:5]'
       }
     },{
-      include,
       test: /\.json$/,
       loader: 'json-loader'
     }]
@@ -79,13 +65,22 @@ const options = ({ entry, path, include, copy }) => ({
 })
 
 // Module definition
-class Webpack {
+const Compiler = function({ entry, copy }) {
 
-  constructor(args, opts = options(args)) {
-    return webpack(opts)
-  }
+  // Compiler plugins
+  const plugins = [
+    //new Webpack.HotModuleReplacementPlugin,
+    new CopyPlugin(copy)
+  ]
+
+  // Create webpack options
+  const options = Options({ entry, copy, plugins })
+  const webpack = Webpack(options)
+
+  // Return webpack
+  return webpack
 
 }
 
 // Export module
-module.exports = Webpack;
+module.exports = Compiler

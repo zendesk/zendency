@@ -1,8 +1,8 @@
 // Dependencies
 const clc = require('cli-color')
 
-// Settingsc
-const screen   = clc.reset
+// Settings
+const reset    = clc.reset
 const lines    = clc.move.lines
 const normal   = clc.xterm(245)
 const green    = clc.bold.xterm(231).bgXterm(64)
@@ -60,7 +60,7 @@ const list = (input, { type }) => {
 }
 
 // Clear screen
-const clear = () => process.stdout.write(screen)
+const clear = () => process.stdout.write(reset)
 
 // Write empty line
 const line = () => process.stdout.write(`\n`)

@@ -2,25 +2,24 @@
 
 // Dependencies
 const program     = require('commander')
-const package     = require('./../package.json')
 const changelog   = require('./components/changelog.js')
-const development = require('./components/development.js')
 const compile     = require('./components/compile.js')
+const Package     = require('./components/helpers/package')
+
+// Get callee packages
+const package = new Package('package.json')
 
 // CLI interface
 program
-  .version(package.version)
   .option('-c --changelog',   'Add changelog to the most recent tag')
   .option('-d --development', 'Run project in development environment')
-  .option('-p --compile',     'Compile project for release')
+  .option('-c --compile',     'Compile project for release')
+  .option('-b --bundle',      'Bundle project for app framework')
   .parse(process.argv)
 
 // Actions
 if (program.changelog)
-  changelog()
-
-if (program.development)
-  development()
+  changelog(package)
 
 if (program.compile)
-  compile()
+  compile(package, './app/')

@@ -1,90 +1,32 @@
 // Dependencies
-const fstream = require('fstream')
-const tar     = require('tar')
-const del     = require('del');
-
-const Webpack = require('./helpers/webpack')
-const Package = require('./helpers/package')
-const zaf     = require('./helpers/zaf')
-const cli     = require('./helpers/cli')
-const fs      = require('./helpers/fs')
-
-// Get callee packages
-const package  = new Package('package.json')
-const manifest = new Package('manifest.json')
+const path     = require('path')
+const Compiler = require('./helpers/compiler')
 
 // Module definition
-module.exports = () => {
+module.exports = ({ base, data: { main, files }}, dist) => {
 
-  // Settings
-  const data  = package.data
-  const main  = data.main
-  const files = fs.onlyFiles(data.assets)
-
-  // Add path to list
-  const include = fs.map(main, file => {
-    return fs.absolute(package.path, fs.split(file).filepath)
+  //
+  const format = (file) => ({
+    'input':     path.join(base, main, path.relative(main, file)),
+    'output':    path.join(base, dist, path.relative(main, file)),
+    'extension': path.extname(file).slice(1)
   })
 
-  // Create entry point
-  const entry = fs.absolute(package.path, files)
+  const fnEntry = (url) => ({
+    [url.output]: url.input
+  })
 
-  // Add copy path
-  const copy = [{
-    from: fs.absolute(package.path, 'manifest.json'),
-    to:   fs.absolute(package.path, 'app/manifest.json')
-  }, {
-    from: fs.absolute(package.path, data.main),
-    to:   fs.absolute(package.path, 'app/assets/index.html')
-  }, {
-    from: fs.absolute(data.translation, '**/*'),
-    to:   fs.absolute(package.path, 'app/translations/[name].[ext]')
-  }]
+  const fnDests = (obj) => ({
+    'from': obj.input,
+    'to':   obj.output
+  })
 
-  // Run webpack
-  const compiler = new Webpack({ entry, path: package.path + '/app/assets/', include, copy })
-
-  // Show step
-  cli.clear()
-  cli.line()
-  cli.log('Compiling...')
-  cli.line()
+  //
+  const entry = files.map(format).filter(i => i.extension === 'js').map(fnEntry).pop()
+  const copy  = files.map(format).filter(i => i.extension !== 'js').map(fnDests)
 
   // Run compiler
-  compiler.run((error, stats) => {
-
-    // Return error
-    if (error)
-      return console.error(error)
-
-    // Zip folder
-    const stream = fstream
-      .Reader(fs.absolute(package.path, 'app'))
-      .pipe(tar.Pack())
-      .pipe(fstream.Writer('app.tar'))
-
-
-    stream.on('close', function() {
-
-      // Show step
-      cli.clear()
-      cli.line()
-      cli.log('Create TAR file...')
-      cli.line()
-
-      // Remove temp file
-      del([fs.absolute(package.path, 'app')]).then(paths => {
-
-        // Show success
-        cli.clear()
-        cli.line()
-        cli.success('Completed')
-        cli.line()
-
-      })
-
-    });
-
-  })
+  const compiler = new Compiler({ entry, copy })
+  compiler.run(( error, stats ) => {})
 
 }

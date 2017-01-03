@@ -1,20 +1,25 @@
 // Dependencies
 const path = require('path')
-const fs   = require('./fs')
 
 // Module definition
 class Package {
 
   constructor(filename) {
 
+    // Give input absolute path
+    const absolute = (base, input) =>
+      input instanceof Array
+        ? input.map(file => path.join(base, file))
+        : path.join(base, input)
+
     // Get parent path
-    const dir = path.dirname(module.paths[4], '../')
-    const pkg = fs.absolute(dir, filename)
+    const dir = process.env.PWD
+    const pkg = absolute(dir, filename)
 
     try {
 
       return {
-        path: dir,
+        base: dir,
         data: require(pkg)
       }
 
