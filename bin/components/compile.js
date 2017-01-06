@@ -1,32 +1,25 @@
 // Dependencies
-const path     = require('path')
 const Compiler = require('./helpers/compiler')
+const json     = require('./helpers/json')
 
 // Module definition
-module.exports = ({ base, data: { main, files }}, dist) => {
+module.exports = ({ main, files }, dist) => {
 
-  //
-  const format = (file) => ({
-    'input':     path.join(base, main, path.relative(main, file)),
-    'output':    path.join(base, dist, path.relative(main, file)),
-    'extension': path.extname(file).slice(1)
-  })
+  // Format data
+  const format = (file) =>
+    json.format({ main, file, dist })
 
-  const fnEntry = (url) => ({
-    [url.output]: url.input
-  })
+  // Create file paths
+  const entry = files.map(format).filter(json.hasJS).reduce(json.toObject, {})
+  const copy  = files.map(format).filter(json.notJS)
 
-  const fnDests = (obj) => ({
-    'from': obj.input,
-    'to':   obj.output
-  })
+  // Initiate plugins
+  const plugins = [
+    new Compiler.CopyPlugin(copy)
+  ]
 
-  //
-  const entry = files.map(format).filter(i => i.extension === 'js').map(fnEntry).pop()
-  const copy  = files.map(format).filter(i => i.extension !== 'js').map(fnDests)
-
-  // Run compiler
-  const compiler = new Compiler({ entry, copy })
+  // Create and run compiler
+  const compiler = new Compiler({ entry, plugins })
   compiler.run(( error, stats ) => {})
 
 }
