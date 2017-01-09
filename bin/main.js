@@ -23,7 +23,7 @@ program
   .command('development')
   .description('Run project in development environment')
   .action((output, options) => {
-    development(package, './build/')
+    development(package, manifest)
   });
 
 program

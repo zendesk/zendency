@@ -7,10 +7,10 @@ module.exports = ({ main, files }, dist) => {
 
   // Format data
   const format = (file) =>
-    json.format({ main, file, dist })
+    json.paths({ main, file }, dist)
 
   // Create file paths
-  const entry = files.map(format).filter(json.hasJS).reduce(json.toObject, {})
+  const entry = files.map(format).filter(json.hasJS).reduce(json.compiler, {})
   const copy  = files.map(format).filter(json.notJS)
 
   // Initiate plugins
@@ -20,6 +20,8 @@ module.exports = ({ main, files }, dist) => {
 
   // Create and run compiler
   const compiler = new Compiler({ entry, plugins })
-  compiler.run(( error, stats ) => {})
+
+  // Run compiler
+  compiler.compile(error => {})
 
 }

@@ -23,7 +23,7 @@
   },
   "scripts": {
     "consume": "npm link && npm link zendency",
-    "postversion": "zendency --changelog"
+    "postversion": "zendency changelog"
   },
   "dependencies": {
     "babel-core": "6.x.x",
