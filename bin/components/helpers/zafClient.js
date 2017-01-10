@@ -1,49 +1,46 @@
-const client = ({
-    location, noTemplate, appName, appVersion, port,
-    id, authorName, authorEmail, frameworkVersion,
-    requirements, timestamp
-}) => {
+// Create timestamp
+const timestamp = () =>
+  (new Date).getTime()
 
-  // Create App
-  const app = ZendeskApps.defineApp()
+// Module definition
+const create = (manifest, port, id = 0) =>
+  `(function() {
+    var app = ZendeskApps.defineApp();
 
-  // Ember function
-  app.reopenClass({
-    location, noTemplate,
-    singleInstall: false,
-    signedUrls:    false
-  })
+    app.reopenClass({
+      "location": ${ JSON.stringify(manifest.location) },
+      "noTemplate": ${ JSON.stringify(manifest.noTemplate || []) },
+      "singleInstall": false,
+      "signedUrls": false
+    })
 
-  // Ember function
-  app.reopen({
-    appName, appVersion, frameworkVersion,
+    app.reopen({
+      appName: "${ manifest.name }",
+      appVersion: "${ manifest.version }",
+      assetUrlPrefix: "http://localhost:${ port }/",
+      appClassName: "app-${ id }",
+      author: {
+        name: "${ manifest.author.name }",
+        email: "${ manifest.author.email }"
+      },
+      frameworkVersion: "${ manifest.frameworkVersion }"
+    });
 
-    assetUrlPrefix: `http://localhost:${port}`,
-    appClassName:   `app-${id}`,
+    app.install({
+      "id": ${ id },
+      "app_id": ${ id },
+      "app_name": "${ manifest.name }",
+      "enabled": true,
+      "requirements": ${ JSON.stringify(manifest.requirements || null) },
+      "settings": {
+        "title": "${ manifest.name }"
+      },
+      "updated_at": "${ timestamp() }",
+      "created_at": "${ timestamp() }"
+    });
+  }());
 
-    author: {
-      name:  authorName,
-      email: authorEmail
-    }
-  });
+  ZendeskApps.trigger && ZendeskApps.trigger('ready');`
 
-  // Install app
-  app.install({
-    id, requirements
-
-    app_id:   id,
-    app_name: appName,
-    enabled:  true,
-
-    settings: {
-      title: name
-    },
-
-    updated_at: timestamp,
-    created_at: timestamp
-  });
-
-  // Trigger app
-  ZendeskApps.trigger && ZendeskApps.trigger('ready');
-
-}
+// Export module
+module.exports = { create }
