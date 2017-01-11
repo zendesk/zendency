@@ -6,6 +6,7 @@ const Asset       = require('./components/helpers/asset')
 const changelog   = require('./components/changelog.js')
 const development = require('./components/development.js')
 const compile     = require('./components/compile.js')
+const bundle      = require('./components/bundle.js')
 
 // Get callee assets
 const package  = new Asset('package.json')
@@ -36,7 +37,8 @@ program
 program
   .command('bundle [output]')
   .description('Bundle project for app framework')
-  .action((output = './bundle.zip', options) => {
+  .action((output = './bundle/', options) => {
+    bundle(package, output)
   });
 
 program.parse(process.argv);

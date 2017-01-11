@@ -2,18 +2,18 @@
 const path = require('path')
 
 // Get absolute path
-exports.absolute = (file) =>
-  path.join(process.env.PWD, file)
+exports.absolute = (file, ...args) =>
+  path.join(process.env.PWD, file, ...args)
 
 // Get relative path
 exports.relative = (main, file) =>
   path.relative(main, file)
 
 // Create paths
-exports.paths = ({main, file}, dist = '') => ({
+exports.paths = ({main, file}, dist = '', ...args) => ({
   from: path.join(process.env.PWD, main, path.relative(main, file)),
   to:   Boolean(dist)
-          ? path.join(process.env.PWD, dist, path.relative(main, file))
+          ? path.join(process.env.PWD, dist, ...args, path.relative(main, file))
           : path.relative(main, file)
 })
 

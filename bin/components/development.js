@@ -42,7 +42,15 @@ module.exports = ({ main, files, config }, manifest) => {
   }
 
   // Run server on port
-  compiler.listen(config.port, { hot: true, quiet: true, contentBase: base, setup }, error => {
+  compiler.listen(config.port, {
+    hot: true,
+    quiet: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+    contentBase: base,
+    setup
+  }, error => {
     console.log(`localhost:${config.port}`)
   })
 

@@ -8,6 +8,7 @@ const create = (manifest, port, id = 0) =>
     var app = ZendeskApps.defineApp();
 
     app.reopenClass({
+      "experiments": ${ JSON.stringify(manifest.experiments) },
       "location": ${ JSON.stringify(manifest.location) },
       "noTemplate": ${ JSON.stringify(manifest.noTemplate || []) },
       "singleInstall": false,
@@ -17,6 +18,23 @@ const create = (manifest, port, id = 0) =>
     app.reopen({
       appName: "${ manifest.name }",
       appVersion: "${ manifest.version }",
+      locationIcons: {
+        "support":{
+          "nav_bar": {
+            "inactive": "icon_nav_bar_inactive.png",
+            "active": "icon_nav_bar_active.png",
+            "hover": "icon_nav_bar_hover.png"
+          },
+          "top_bar": {
+            "inactive": "icon_top_bar_inactive.png",
+            "active": "icon_top_bar_active.png",
+            "hover": "icon_top_bar_hover.png"
+          },
+          "ticket_editor": {
+            "svg": "icon_ticket_editor.svg?${ timestamp() }"
+          }
+        }
+      },
       assetUrlPrefix: "http://localhost:${ port }/",
       appClassName: "app-${ id }",
       author: {
