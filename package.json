@@ -34,15 +34,15 @@
     "commander": "2.9.x",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "0.x.x",
+    "del": "2.x.x",
     "file-loader": "0.x.x",
     "handlebars": "4.x.x",
     "handlebars-loader": "1.x.x",
+    "json-loader": "0.x.x",
     "react-hot-loader": "1.x.x",
     "shelljs": "0.7.x",
     "style-loader": "0.x.x",
-    "json-loader": "0.x.x",
     "webpack": "1.x.x",
-    "webpack-dev-server": "1.x.x",
-    "del": "2.x.x"
+    "webpack-dev-server": "1.x.x"
   }
 }
