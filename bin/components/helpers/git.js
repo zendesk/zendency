@@ -97,5 +97,5 @@ const message = (tag, changelog, silent = true) => {
 
 }
 
-// Exporter
+// Export module
 module.exports = { command, hash, tag, changelog, publish, user, message }

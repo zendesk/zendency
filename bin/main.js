@@ -2,25 +2,44 @@
 
 // Dependencies
 const program     = require('commander')
-const package     = require('./../package.json')
+const Asset       = require('./components/helpers/asset')
 const changelog   = require('./components/changelog.js')
 const development = require('./components/development.js')
 const compile     = require('./components/compile.js')
+const bundle      = require('./components/bundle.js')
+
+// Get callee assets
+const package  = new Asset('package.json')
+const manifest = new Asset('manifest.json')
 
 // CLI interface
 program
-  .version(package.version)
-  .option('-c --changelog',   'Add changelog to the most recent tag')
-  .option('-d --development', 'Run project in development environment')
-  .option('-p --compile',     'Compile project for release')
-  .parse(process.argv)
+  .command('changelog')
+  .description('Add changelog to the most recent tag')
+  .action((output, options) => {
+    changelog(package)
+  });
 
-// Actions
-if (program.changelog)
-  changelog()
+program
+  .command('development')
+  .description('Run project in development environment')
+  .action((output, options) => {
+    development(package, manifest)
+  });
 
-if (program.development)
-  development()
+program
+  .command('compile [output]')
+  .description('Compile project for release')
+  .action((output = './build/', options) => {
+    compile(package, output)
+  });
 
-if (program.compile)
-  compile()
+program
+  .command('bundle [output]')
+  .description('Bundle project for app framework')
+  .action((output = './bundle/', options) => {
+    bundle(package, output)
+  });
+
+// Parse node arguments
+program.parse(process.argv);

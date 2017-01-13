@@ -23,7 +23,7 @@
   },
   "scripts": {
     "consume": "npm link && npm link zendency",
-    "postversion": "zendency --changelog"
+    "postversion": "zendency changelog"
   },
   "dependencies": {
     "babel-core": "6.x.x",
@@ -43,8 +43,6 @@
     "json-loader": "0.x.x",
     "webpack": "1.x.x",
     "webpack-dev-server": "1.x.x",
-    "del": "2.x.x",
-    "fstream": "1.0.x",
-    "tar": "2.x.x"
+    "del": "2.x.x"
   }
 }
