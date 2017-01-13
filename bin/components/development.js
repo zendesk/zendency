@@ -1,57 +1,30 @@
 // Dependencies
 const Compiler  = require('./helpers/compiler')
-const json      = require('./helpers/json')
-const zafClient = require('./helpers/zafClient')
+const paths     = require('./helpers/paths')
 
 // Module definition
-module.exports = ({ main, files, config }, manifest) => {
-
-  // Format data
-  const format = (file) =>
-    json.paths({ main, file })
+module.exports = ({ compiler: input, files, main, config }, manifest) => {
 
   // Create file paths
-  const base  = json.absolute(main)
-  const entry = files.map(format).filter(json.hasJS).reduce(json.server, {
-    client: 'webpack-dev-server/client?http://localhost:' + config.port
-  })
+  const entry = paths.server(input, { port: config.port })
+  const base  = paths.absolute(main)
 
   // Initiate plugins
   const plugins = [
-    new Compiler.HotModulePlugin()
+    new Compiler.HotModulePlugin(),
+    new Compiler.NoErrorsPlugin()
   ]
+
+  // Server options
+  const options = {
+    port: config.port,
+    base, manifest
+  }
 
   // Create development server
   const compiler = new Compiler({ entry, plugins, path: '/' })
-
-  // Server setup
-  const setup = (express) => {
-
-    if (!manifest.version)
-      return;
-
-    // Create app.js from manifest.json
-    const data = zafClient.create(manifest, config.port)
-
-    // Export app.js
-    express.get('/app.js', (request, response) => {
-      response.setHeader('content-type', 'application/javascript')
-      response.send(data)
-    })
-
-  }
-
-  // Run server on port
-  compiler.listen(config.port, {
-    hot: true,
-    quiet: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
-    contentBase: base,
-    setup
-  }, error => {
-    console.log(`localhost:${config.port}`)
+  compiler.listen(options, error => {
+    console.log('localhost:' + config.port)
   })
 
 }

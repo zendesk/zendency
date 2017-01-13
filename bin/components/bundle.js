@@ -1,24 +1,21 @@
 // Dependencies
 const Compiler = require('./helpers/compiler')
-const json     = require('./helpers/json')
-
-const path = require('path')
+const paths    = require('./helpers/paths')
 
 // Module definition
-module.exports = ({ main, files }, dist) => {
-
-  // Format data
-  const format = (file) =>
-    json.paths({ main, file }, dist, '/assets/')
+module.exports = ({ compiler: input, files, directories }, dist) => {
 
   // Create file paths
-  const entry = files.map(format).filter(json.hasJS).reduce(json.compiler, {})
-  const copy  = files.map(format).filter(json.notJS)
+  const entry = paths.entry(input, { paths: [dist, '/assets/'] })
+  const copy  = paths.files(files, { paths: [dist, '/assets/'] })
 
-  // Copy manifest to bundle
+  // Copy manifest and translations to bundle
   copy.push({
-    from: json.absolute('manifest.json'),
-    to:   json.absolute(dist, 'manifest.json')
+    from: paths.absolute('manifest.json'),
+    to:   paths.absolute(dist, 'manifest.json')
+  }, {
+    from: paths.absolute(directories.translations),
+    to:   paths.absolute(dist, paths.basename(directories.translations))
   })
 
   // Initiate plugins
@@ -28,8 +25,6 @@ module.exports = ({ main, files }, dist) => {
 
   // Create and run compiler
   const compiler = new Compiler({ entry, plugins })
-
-  // Run compiler
   compiler.compile(error => {})
 
 }

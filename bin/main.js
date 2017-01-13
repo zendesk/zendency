@@ -41,4 +41,5 @@ program
     bundle(package, output)
   });
 
+// Parse node arguments
 program.parse(process.argv);

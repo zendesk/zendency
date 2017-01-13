@@ -1,8 +1,12 @@
 // Dependencies
 const webpack = require('webpack')
-const Server  = require('webpack-dev-server')
-const loaders = require('./loaders')
+const server  = require('./server')
 const options = require('./options')
+const loaders = require('./loaders')
+
+// Compiler actions
+const listen  = (compiler, ...args)  => server.run(compiler, ...args)
+const compile = (compiler, callback) => compiler.run(callback)
 
 // Create compiler
 const Compiler = function({ entry, plugins, path }) {
@@ -19,19 +23,10 @@ const Compiler = function({ entry, plugins, path }) {
 
 }
 
-// Create server
-const listen = (compiler, port, options, callback) => {
-
-  const server = new Server(compiler, options)
-  server.listen(port, 'localhost', callback)
-
-}
-
-// Run compiler
-const compile = (compiler, callback) =>
-  compiler.run(callback)
-
 // Export module
 module.exports = Compiler
-module.exports.CopyPlugin = require('copy-webpack-plugin')
+
+// Export child modules
+module.exports.CopyPlugin      = require('copy-webpack-plugin')
 module.exports.HotModulePlugin = webpack.HotModuleReplacementPlugin
+module.exports.NoErrorsPlugin  = webpack.NoErrorsPlugin
