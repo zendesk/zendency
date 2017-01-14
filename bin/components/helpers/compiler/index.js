@@ -29,4 +29,3 @@ module.exports = Compiler
 // Export child modules
 module.exports.CopyPlugin      = require('copy-webpack-plugin')
 module.exports.HotModulePlugin = webpack.HotModuleReplacementPlugin
-module.exports.NoErrorsPlugin  = webpack.NoErrorsPlugin

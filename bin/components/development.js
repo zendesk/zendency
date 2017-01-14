@@ -11,8 +11,7 @@ module.exports = ({ compiler: input, files, main, config }, manifest) => {
 
   // Initiate plugins
   const plugins = [
-    new Compiler.HotModulePlugin(),
-    new Compiler.NoErrorsPlugin()
+    new Compiler.HotModulePlugin()
   ]
 
   // Server options
