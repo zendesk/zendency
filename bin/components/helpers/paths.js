@@ -18,12 +18,12 @@ const entry = (input, { paths }) => {
 }
 
 // Get file paths
-const files = (input, { paths }) => {
+const files = (input, { paths = '', flat = false }) => {
 
-  const format = (item) => ({
+  const format = (item) => (!flat) ? ({
     from: absolute(item),
     to:   absolute(...paths, basename(item))
-  })
+  }) : absolute(item)
 
   return input.map(format)
 
