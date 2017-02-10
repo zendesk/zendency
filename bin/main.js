@@ -37,7 +37,7 @@ program
 program
   .command('bundle [output]')
   .description('Bundle project for app framework')
-  .action((output = './bundle/', options) => {
+  .action((output = './bundle.zip', options) => {
     bundle(package, output)
   });
 
