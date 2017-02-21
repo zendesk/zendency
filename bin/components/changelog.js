@@ -2,7 +2,7 @@
 const git = require('./helpers/git.js')
 
 // Module
-module.exports = (manifest, output) => {
+module.exports = () => {
 
   // Get list of tags and fetch two newest
   const tag = git.tag()

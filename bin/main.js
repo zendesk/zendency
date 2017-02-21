@@ -19,7 +19,7 @@ program
   .command('changelog')
   .description('Add changelog to the most recent tag')
   .action((output, options) => {
-    changelog(manifest, paths.manifest)
+    changelog()
   });
 
 program
@@ -28,7 +28,6 @@ program
   .action((output, options) => {
     version(manifest, output)
   });
-  ///  manifest: path.join(process.env.PWD, 'manifest.json')
 
 program
   .command('development')
