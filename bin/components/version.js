@@ -1,15 +1,12 @@
 // Dependencies
-const fs  = require('fs')
-const git = require('./helpers/git.js')
+const fs   = require('fs')
+const path = require('path')
 
 // Module
-module.exports = (manifest, output) => {
+module.exports = (manifest, package, output) => {
 
-  // Get list of tags and fetch two newest
-  const tag = git.tag()
-
-  // Update manifest version
-  manifest.version = tag.slice(1)
+  // Sync manifest version with package.json
+  manifest.version = package.version
 
   // Get relative path
   const file = path.join(process.env.PWD, output)

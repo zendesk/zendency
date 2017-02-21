@@ -26,7 +26,7 @@ program
   .command('version [output]')
   .description('Change version tags in json files')
   .action((output, options) => {
-    version(manifest, output)
+    version(manifest, package, output)
   });
 
 program
