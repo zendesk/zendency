@@ -1,5 +1,6 @@
 // Dependencies
 const fs  = require('fs')
+const git = require('./helpers/git.js')
 
 // Module
 module.exports = (manifest, output) => {
