@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // Dependencies
+const path        = require('path')
 const program     = require('commander')
 const Asset       = require('./components/helpers/asset')
 const changelog   = require('./components/changelog.js')
@@ -12,12 +13,17 @@ const bundle      = require('./components/bundle.js')
 const package  = new Asset('package.json')
 const manifest = new Asset('manifest.json')
 
+// Relative path of manifest
+const paths = {
+  manifest: path.join(process.env.PWD, 'manifest.json')
+}
+
 // CLI interface
 program
   .command('changelog')
   .description('Add changelog to the most recent tag')
   .action((output, options) => {
-    changelog(package)
+    changelog(manifest, paths.manifest)
   });
 
 program
