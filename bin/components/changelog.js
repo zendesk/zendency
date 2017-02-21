@@ -1,5 +1,4 @@
 // Dependencies
-const fs  = require('fs')
 const git = require('./helpers/git.js')
 
 // Module
@@ -19,18 +18,5 @@ module.exports = (manifest, output) => {
 
   // Publish tags
   git.publish()
-
-  // Check if manifest exists
-  if (manifest) {
-
-    // Update manifest version
-    manifest.version = current.slice(1)
-
-    // Overwrite manifest
-    fs.writeFile(output, JSON.stringify(manifest, null, 2), error => {
-      if (error) throw err
-    });
-
-  }
 
 }

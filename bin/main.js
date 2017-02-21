@@ -5,6 +5,7 @@ const path        = require('path')
 const program     = require('commander')
 const Asset       = require('./components/helpers/asset')
 const changelog   = require('./components/changelog.js')
+const version     = require('./components/version.js')
 const development = require('./components/development.js')
 const compile     = require('./components/compile.js')
 const bundle      = require('./components/bundle.js')
@@ -13,11 +14,6 @@ const bundle      = require('./components/bundle.js')
 const package  = new Asset('package.json')
 const manifest = new Asset('manifest.json')
 
-// Relative path of manifest
-const paths = {
-  manifest: path.join(process.env.PWD, 'manifest.json')
-}
-
 // CLI interface
 program
   .command('changelog')
@@ -25,6 +21,14 @@ program
   .action((output, options) => {
     changelog(manifest, paths.manifest)
   });
+
+program
+  .command('version [output]')
+  .description('Change version tags in json files')
+  .action((output, options) => {
+    version(manifest, output)
+  });
+  ///  manifest: path.join(process.env.PWD, 'manifest.json')
 
 program
   .command('development')
