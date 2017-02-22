@@ -4,6 +4,7 @@ const path = require('path')
 // Helper functions
 const absolute = (...paths) => path.join(process.env.PWD, ...paths)
 const basename = (...paths) => path.basename(...paths)
+const filetype = (...paths) => path.extname(...paths).slice(1)
 
 // Get entry paths
 const entry = (input, { paths }) => {
@@ -44,4 +45,4 @@ const server = (input, { port }) => {
 }
 
 // Export module
-module.exports = { absolute, basename, entry, files, server }
+module.exports = { absolute, basename, filetype, entry, files, server }
