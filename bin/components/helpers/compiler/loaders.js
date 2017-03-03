@@ -14,11 +14,6 @@ module.exports = [{
     name: '[name].[ext]'
   }
 
-}, {
-  test: /\.jsx?$/,
-  exclude: /node_modules/,
-  loader: 'react-hot'
-
 },{
 
   test: /\.jsx?$/,
