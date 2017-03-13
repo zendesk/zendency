@@ -18,7 +18,7 @@ zendency compile {optional filename}
 zendency bundle {optional filename}
 
 # Change version attribute in json files
-zendency version manifest.json
+zendency version {filename.json}
 
 # Create a changelog since last version
 zendency changelog
