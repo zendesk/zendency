@@ -37,6 +37,7 @@ zendency changelog
 },
 
 "scripts": {
+    "version": "zendency version manifest.json && git add -A",
     "postversion": "zendency changelog && git push"
 }
 
