@@ -12,10 +12,10 @@ Needs at least `NPM@1.1.65` and `Node V6`<br>
 zendency development
 
 # Compile project
-zendency compile {filename}
+zendency compile {optional filename}
 
 # Bundle project for Zendesk Marketplace
-zendency bundle {filename}
+zendency bundle {optional filename}
 
 # Change version attribute in json files
 zendency version manifest.json
