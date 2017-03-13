@@ -47,9 +47,7 @@ zendency changelog
 You'll update your package version as before by doing `npm version minor`<br>
 `postversion` will create a new release with release notes and push
 
-###### Example
-
-https://github.com/zendesk/zendency/releases
+**Example:** https://github.com/zendesk/zendency/releases
 
 ---
 
@@ -114,3 +112,6 @@ Path to translation file needed for Zendesk App
 
 ---
 
+###### Demo App
+
+https://github.com/zendesk/zendency-demo-app
