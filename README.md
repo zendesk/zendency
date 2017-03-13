@@ -33,12 +33,12 @@ zendency changelog
 ...
 
 "devDependencies": {
-    "zendency": "zendesk/zendency#v3.2.2"
+  "zendency": "zendesk/zendency#v3.2.2"
 },
 
 "scripts": {
-    "version": "zendency version manifest.json && git add -A",
-    "postversion": "zendency changelog && git push"
+  "version": "zendency version manifest.json && git add -A",
+  "postversion": "zendency changelog && git push"
 }
 
 ...
@@ -59,12 +59,12 @@ You'll update your package version as before by doing `npm version minor`<br>
 ...
 
 "devDependencies": {
-    "zendency": "zendesk/zendency#v3.2.2"
+  "zendency": "zendesk/zendency#v3.2.2"
 },
 
 "scripts": {
-    "start": "zendency development",
-    "bundle": "zendency bundle $1",
+  "start": "zendency development",
+  "bundle": "zendency bundle $1",
 },
 
 "main": "./src/",
