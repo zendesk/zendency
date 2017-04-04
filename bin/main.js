@@ -9,6 +9,7 @@ const version     = require('./components/version.js')
 const development = require('./components/development.js')
 const compile     = require('./components/compile.js')
 const bundle      = require('./components/bundle.js')
+const i18n        = require('./components/i18n.js')
 
 // Get callee assets
 const package  = new Asset('package.json')
@@ -49,6 +50,13 @@ program
   .action((output = './bundle.zip', options) => {
     bundle(package, output)
   });
+
+  program
+    .command('i18n [master] [root]')
+    .description('Generate translation files from master file')
+    .action((master = './master.lang', root, options) => {
+      i18n(master, root)
+    });
 
 // Parse node arguments
 program.parse(process.argv);
