@@ -22,7 +22,7 @@ module.exports = ({ compiler: input, files, directories }, dist) => {
     to:   paths.absolute(build, 'manifest.json')
   }, {
     from: paths.absolute(directories.translations),
-    to:   paths.absolute(build, paths.basename(directories.translations))
+    to:   paths.absolute(build, paths.basename('translations'))
   })
 
   // Initiate plugins

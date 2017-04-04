@@ -3,7 +3,7 @@ const Compiler  = require('./helpers/compiler')
 const paths     = require('./helpers/paths')
 
 // Module definition
-module.exports = ({ compiler: input, files, main, config }, manifest) => {
+module.exports = ({ compiler: input, files, directories = {}, main, config }, manifest) => {
 
   // Create file paths
   const entry = paths.server(input, { port: config.port })
@@ -18,10 +18,19 @@ module.exports = ({ compiler: input, files, main, config }, manifest) => {
     new Compiler.HotModulePlugin()
   ]
 
+  // Proxy translations files
+  const translationPath = paths.relative(main, directories.translations);
+  const proxy = directories.translations ? {
+    '/translations/*.json': {
+      target: `http://localhost:${ config.port }`,
+      pathRewrite: (path, req) => translationPath + '/' + path.split('/').pop()
+    }
+  } : {}
+
   // Server options
   const options = {
     port: config.port,
-    base, manifest
+    base, manifest, proxy
   }
 
   // Create development server

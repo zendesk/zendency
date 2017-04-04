@@ -20,7 +20,7 @@ const router = (manifest, port) => (express) => {
 }
 
 // Server options
-const options = (contentBase, setup) => ({
+const options = (contentBase, setup, proxy = {}) => ({
   hot:   true,
   quiet: true,
 
@@ -28,14 +28,16 @@ const options = (contentBase, setup) => ({
     'Access-Control-Allow-Origin': '*'
   },
 
-  contentBase, setup
+  contentBase,
+  setup,
+  proxy
 })
 
 // Start server
-const run = (compiler, { port, base, manifest }, callback) => {
+const run = (compiler, { port, base, manifest, proxy }, callback) => {
 
   const route = router(manifest, port)
-  const opts  = options(base, route)
+  const opts  = options(base, route, proxy)
 
   const server = new Server(compiler, opts)
   server.listen(port, 'localhost', callback)
