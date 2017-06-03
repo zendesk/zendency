@@ -110,9 +110,3 @@ Files to copy over to your bundle<br>
 <br>
 `directories`<br>
 Path to translation file needed for Zendesk App
-
----
-
-###### Demo App
-
-https://github.com/zendesk/zendency-demo-app
