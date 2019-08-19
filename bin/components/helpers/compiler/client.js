@@ -21,11 +21,13 @@ const create = (manifest, port, id = 0) =>
       locationIcons: {
         "support":{
           "nav_bar": {
+            "svg": "icon_nav_bar.svg",
             "inactive": "icon_nav_bar_inactive.png",
             "active": "icon_nav_bar_active.png",
             "hover": "icon_nav_bar_hover.png"
           },
           "top_bar": {
+            "svg": "icon_top_bar.svg",
             "inactive": "icon_top_bar_inactive.png",
             "active": "icon_top_bar_active.png",
             "hover": "icon_top_bar_hover.png"
