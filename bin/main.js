@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 // Dependencies
-const path        = require('path')
 const program     = require('commander')
 const Asset       = require('./components/helpers/asset')
 const changelog   = require('./components/changelog.js')

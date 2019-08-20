@@ -1,3 +1,14 @@
+// Dependencies
+const Asset = require('../asset')
+
+// Get callee assets
+const package = new Asset('package.json')
+
+// Get parameters from package.json as fallback for app settings
+const parameters = package.parameters
+                 ? JSON.stringify(package.parameters).replace(/{|}/g, '')
+                 : ''
+
 // Create timestamp
 const timestamp = () =>
   (new Date).getTime()
@@ -53,7 +64,8 @@ const create = (manifest, port, id = 0) =>
       "enabled": true,
       "requirements": ${ JSON.stringify(manifest.requirements || null) },
       "settings": {
-        "title": "${ manifest.name }"
+        "title": "${ manifest.name }",
+        ${parameters}
       },
       "updated_at": "${ timestamp() }",
       "created_at": "${ timestamp() }"
