@@ -15,5 +15,5 @@ $ npm version minor
 
 ### API
 
-[Create ZAF App](https://github.com/zendesklabs/zendency/wiki/ZAF-App)
+[Create ZAF App](https://github.com/zendesklabs/zendency/wiki/ZAF-App)<br>
 [Usefull helpers](https://github.com/zendesklabs/zendency/wiki/Helpers)
