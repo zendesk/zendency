@@ -5,58 +5,30 @@ Needs at least `NPM@1.1.65` and `Node V6`<br>
 
 ---
 
-###### Options
+## Develop App for Zendesk Marketplace
 
-```shell
-# Run project on localhost:4567 
+##### Run Project
+> port `4567` is used by Zendesk App Framwork in development and can be trigger by running Support with `?zat=true` and disabling cross domain security
+
+```Shell
 zendency development
-
-# Compile project
-zendency compile {optional filename}
-
-# Bundle project for Zendesk Marketplace
-zendency bundle {optional filename}
-
-# Change version attribute in json files
-zendency version {filename.json}
-
-# Create a changelog since last version
-zendency changelog
 ```
-
---
-
-###### Create a new release
-
-`package.json`
-```json
-...
-
-"devDependencies": {
-  "zendency": "zendesk/zendency#v3.2.2"
-},
-
-"scripts": {
-  "version": "zendency version manifest.json && git add -A",
-  "postversion": "zendency changelog && git push"
-}
-
-...
-```
-
-
-You'll update your package version as before by doing `npm version minor`<br>
-`postversion` will create a new release with release notes and push
-
-**Example:** https://github.com/zendesk/zendency/releases
 
 ---
 
-###### Develop App for Zendesk Marketplace
+##### Bundle project for Zendesk Marketplace
+> Bundles project for being uploaded to Zendesk Marketplace or as private app
 
-`package.json`
-```json
-...
+```Shell
+zendency bundle {optional filename}
+```
+
+---
+
+##### Example package.json file for Zendesk App
+
+```javascript
+{
 
 "devDependencies": {
   "zendency": "zendesk/zendency#v3.2.2"
@@ -67,15 +39,18 @@ You'll update your package version as before by doing `npm version minor`<br>
   "bundle": "zendency bundle $1",
 },
 
+// Entry point for app
 "main": "./src/",
 
+// Javascript file to compile. This is not required, but you'll need to add the attribute with an empty array
 "compiler": [
   {
-    "from": "./src/javascript/main.js",
-    "to": "./javascript/main.js"
+    "from": "./src/javascript/main.js", // Path from root
+    "to": "./javascript/main.js" // Relative path from index.html
   }
 ],
 
+// Files to copy over to your bundle
 "files": [
   "./src/images/logo.png",
   "./src/images/logo-small.png",
@@ -84,29 +59,41 @@ You'll update your package version as before by doing `npm version minor`<br>
   "./src/stylesheet/"
 ],
 
+// Default ZAF parameters _(from manifest.json)_ to default to in development
+"parameters": {
+  "token": "..."
+}
+
+// Path to translation file needed for Zendesk App
 "directories": {
   "translations": "./src/translations"
-},
-
-...
-```
-
-```Shell
-npm install
-npm start
-npm bundle app.zip
+}
 ```
 
 ---
 
-`main`<br>
-Entry point for app<br>
-<br>
-`compiler`<br>
-Javascript file to compile this is not required, but you'll need to have the attribute with an empty array<br>
-<br>
-`files`<br>
-Files to copy over to your bundle<br>
-<br>
-`directories`<br>
-Path to translation file needed for Zendesk App
+## Helpers
+
+##### Change version attribute in json files
+
+```shell
+zendency version {filename.json}
+```
+
+---
+
+##### Create a changelog since last version
+
+```shell
+zendency changelog
+```
+
+
+
+## Create a new release
+To create a new release of zendency you need to run the following
+```shell
+$ npm run consume
+$ npm version minor
+```
+
