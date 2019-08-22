@@ -59,7 +59,7 @@ zendency bundle {optional filename}
   "./src/stylesheet/"
 ],
 
-// Default ZAF parameters _(from manifest.json)_ to default to in development
+// Parameters from manifest.json that we default to in development
 "parameters": {
   "token": "..."
 }
@@ -90,7 +90,7 @@ zendency changelog
 
 
 
-## Create a new release
+# Create a new Zendency release
 To create a new release of zendency you need to run the following
 ```shell
 $ npm run consume
