@@ -38,7 +38,7 @@ program
 
 program
   .command('compile [output]')
-  .description('Compile project for release')
+  .description('Compile project for release without app framework assets')
   .action((output = './build/', options) => {
     compile(package, output)
   });
