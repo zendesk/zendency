@@ -5,9 +5,15 @@ const Asset = require('../asset')
 const package = new Asset('package.json')
 
 // Get parameters from package.json as fallback for app settings
-const parameters = package.parameters
-                 ? JSON.stringify(package.parameters).replace(/{|}/g, '')
-                 : ''
+const parameters = package.parameters || []
+
+// Read environment variables from parameters
+const parsedParameters = Object.keys(parameters).map(key => {
+  const value = parameters[key]
+  const envValue = process.env[value.slice(1)]
+
+  return key + ':' + (envValue || value)
+}).join(',')
 
 // Create timestamp
 const timestamp = () =>
@@ -65,7 +71,7 @@ const create = (manifest, port, id = 0) =>
       "requirements": ${ JSON.stringify(manifest.requirements || null) },
       "settings": {
         "title": "${ manifest.name }",
-        ${parameters}
+        ${parsedParameters}
       },
       "updated_at": "${ timestamp() }",
       "created_at": "${ timestamp() }"
