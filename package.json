@@ -1,5 +1,5 @@
 {
-  "version": "3.4.1",
+  "version": "3.5.0",
   "name": "zendency",
   "description": "Handy executables to install into the PATH",
   "authors": [
@@ -26,9 +26,9 @@
     "postversion": "zendency changelog"
   },
   "dependencies": {
-    "archiver": "1.3.x",
     "@babel/core": "7.x.x",
     "@babel/plugin-transform-runtime": "7.x.x",
+    "archiver": "1.3.x",
     "babel-loader": "8.x.x",
     "cli-color": "1.1.x",
     "commander": "2.9.x",
