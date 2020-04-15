@@ -26,9 +26,10 @@
     "postversion": "zendency changelog"
   },
   "dependencies": {
-    "@babel/core": "7.x.x",
-    "@babel/plugin-transform-runtime": "7.x.x",
-    "@babel/preset-env": "7.x.x",
+    "@babel/core": "7.5.x",
+    "@babel/plugin-transform-runtime": "7.5.x",
+    "@babel/preset-env": "7.5.x",
+    "@babel/runtime": "7.5.x",
     "archiver": "1.3.x",
     "babel-loader": "8.x.x",
     "cli-color": "1.1.x",
